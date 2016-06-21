@@ -2,7 +2,7 @@
   "name": "vscode-ava-runner",
   "displayName": "vscode-ava-runner",
   "description": "This plugin executes ava in a background process and informs the user about tests execution in the status bar.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "KnisterPeter",
   "engines": {
     "vscode": "^1.0.0"
