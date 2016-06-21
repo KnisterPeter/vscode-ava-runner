@@ -44,6 +44,9 @@ function stopAva() {
     try {
       avaProcess.kill();
       avaProcess = undefined;
+
+      channel.hide();
+      bar.hide();
     } catch (e) {
       console.error(e);
     }
