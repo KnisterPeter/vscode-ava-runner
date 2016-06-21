@@ -1,5 +1,6 @@
 'use strict';
-import { join } from 'path';
+import { exists } from 'fs';
+import { join, resolve } from 'path';
 import * as vscode from 'vscode';
 import { spawn, ChildProcess } from 'child_process';
 import * as ansiregex from 'ansi-regex';
@@ -24,17 +25,24 @@ function output(data: string): void {
 function startAva() {
   if (vscode.workspace.rootPath) {
     console.log('Starting...', vscode.workspace.rootPath);
-    try {
-      avaProcess = spawn('./node_modules/.bin/ava', ['--watch'], {
-        cwd: vscode.workspace.rootPath
-      });
-      avaProcess.stdout.on('data', (data: Buffer) => output(data.toString()));
-      avaProcess.stderr.on('data', (data: Buffer) => output(data.toString()));
-      avaProcess.on('exit', code => console.log(`Exited AVA with ${code}`));
-      console.log(`Started AVA process [pid=${avaProcess.pid}]`);
-    } catch (e) {
-      console.error(e);
-    }
+    const avaPath = resolve(vscode.workspace.rootPath, './node_modules/.bin/ava');
+    exists(avaPath, exists => {
+      if (exists) {
+        try {
+          avaProcess = spawn(avaPath, ['--watch'], {
+            cwd: vscode.workspace.rootPath
+          });
+          avaProcess.stdout.on('data', (data: Buffer) => output(data.toString()));
+          avaProcess.stderr.on('data', (data: Buffer) => output(data.toString()));
+          avaProcess.on('exit', code => console.log(`Exited AVA with ${code}`));
+          console.log(`Started AVA process [pid=${avaProcess.pid}]`);
+        } catch (e) {
+          vscode.window.showErrorMessage((e as Error).message);
+        }
+      } else {
+        vscode.window.showWarningMessage('ava binary not found');
+      }
+    });
   }
 }
 
@@ -48,7 +56,7 @@ function stopAva() {
       channel.hide();
       bar.hide();
     } catch (e) {
-      console.error(e);
+      vscode.window.showErrorMessage((e as Error).message);
     }
   }
 }
