@@ -33,8 +33,8 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
-    "typescript": "^1.8.5",
-    "vscode": "^0.11.0"
+    "typescript": "^2.1.4",
+    "vscode": "^1.0.3"
   },
   "dependencies": {
     "ansi-regex": "^2.0.0"
