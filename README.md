@@ -1,5 +1,7 @@
 # vscode-ava-runner
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/KnisterPeter/vscode-ava-runner.svg)](https://greenkeeper.io/)
+
 This plugin executes ava in a background process and informs the user about
 tests execution in the status bar.
 
