@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "typescript": "^2.1.4",
-    "vscode": "^1.0.3"
+    "vscode": "^1.1.26"
   },
   "dependencies": {
     "ansi-regex": "^4.0.0"
